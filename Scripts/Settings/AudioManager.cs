@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float MasterVol = 1f;
     [Range(0f, 1f)] public float BGMVol = 1f;
     [Range(0f, 1f)] public float SFXVol = 1f;
+
+    Coroutine BGMFadeCoroutine;
 
     private void Awake()
     {
@@ -44,6 +47,7 @@ public class AudioManager : MonoBehaviour
         {
             BGMSource.clip = BGMClips[index];
             BGMSource.Play();
+            Debug.Log("Played BGM: " + index);
         }
     }
 
@@ -52,6 +56,7 @@ public class AudioManager : MonoBehaviour
         if (index >= 0 && index < SFXClips.Length)
         {
             SFXSource.PlayOneShot(SFXClips[index]);
+            Debug.Log("Played SFX: " + index);
         }
     }
 
@@ -66,16 +71,73 @@ public class AudioManager : MonoBehaviour
     public void PauseBGM()
     {
         BGMSource.Pause();
+        Debug.Log("BGM Paused.");
     }
 
     public void ResumeBGM()
     {
         BGMSource.UnPause();
+        Debug.Log("BGM Resumed.");
+    }
+
+    public void FadeInBGM(int Index, float duration)
+    {
+        if (BGMFadeCoroutine != null)
+            StopCoroutine(BGMFadeCoroutine);
+        BGMSource.volume = 0f;
+        PlayBGM(Index);
+        Debug.Log("Fading in BGM...");
+        BGMFadeCoroutine = StartCoroutine(FadeInBGMCoroutine(duration));
+    }
+
+    public void FadeOutBGM(float duration)
+    {
+        if (BGMFadeCoroutine != null)
+            StopCoroutine(BGMFadeCoroutine);
+        Debug.Log("Fading out BGM...");
+        BGMFadeCoroutine = StartCoroutine(FadeOutBGMCoroutine(duration));
+    }
+
+    private IEnumerator FadeInBGMCoroutine(float duration)
+    {
+        float targetVolume = MasterVol * BGMVol;
+
+        if (!BGMSource.isPlaying)
+            BGMSource.Play();
+
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            BGMSource.volume = Mathf.Lerp(0f, targetVolume, time / duration);
+            yield return null;
+        }
+
+        BGMSource.volume = targetVolume;
+        Debug.Log("BGM Faded in.");
+    }
+
+    private IEnumerator FadeOutBGMCoroutine(float duration)
+    {
+        float startVolume = BGMSource.volume;
+
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            BGMSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
+            yield return null;
+        }
+
+        BGMSource.volume = 0f;
+        Debug.Log("BGM Faded out.");
+        StopBGM();
     }
 
     public void StopBGM()
     {
         BGMSource.Stop();
+        Debug.Log("BGM Stopped.");
     }
 
     public void SetMasterVolume(float volume)

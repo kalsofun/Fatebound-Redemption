@@ -12,13 +12,13 @@ public class DialogueText : MonoBehaviour
     private bool _isTyping = false;
 
     [System.Serializable]
-    public struct CharInf
+    public struct CharInfo
     {
         public string name;
         public GameObject icon;
         public int speak;
     }
-    [SerializeField] CharInf[] charInfos = { new CharInf { name = "苡慧", icon = null, speak = 0 }, };
+    [SerializeField] CharInfo[] charInfos = { new CharInfo { name = "苡慧", icon = null, speak = 0 }, };
     [SerializeField] TextMeshProUGUI CharNameDisp;
 
     [System.Serializable]

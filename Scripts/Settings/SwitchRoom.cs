@@ -8,10 +8,16 @@ public class SwitchRoom : MonoBehaviour
 
     [SerializeField] Vector2 Range = new Vector2(10f, 10f);
     [SerializeField] string SwitchRoomName;
+    [SerializeField] bool ImmediateSwitch = false;
 
     void Start()
     {
         PlayerLayer = LayerMask.GetMask("Player");
+        if (ImmediateSwitch)
+        {
+            Debug.Log("Switch Scene to " + SwitchRoomName);
+            SceneManager.LoadScene(SwitchRoomName);
+        }
     }
 
     void Update()

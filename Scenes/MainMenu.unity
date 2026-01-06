@@ -2805,7 +2805,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   BGMSource: {fileID: 825245356}
   SFXSource: {fileID: 781352469}
-  BGMClips: []
+  BGMClips:
+  - {fileID: 8300000, guid: 831dfd0fc957fa64e8e1597bd81b4c18, type: 3}
   SFXClips: []
   CharClips:
   - {fileID: 8300000, guid: 41837f33e62208640bd66bf9c03a209a, type: 3}
