@@ -16,8 +16,9 @@ public class DialogueText : MonoBehaviour
     {
         public string name;
         public GameObject icon;
+        public int speak;
     }
-    [SerializeField] CharInf[] charInfos = { new CharInf { name = "苡慧", icon = null }, };
+    [SerializeField] CharInf[] charInfos = { new CharInf { name = "苡慧", icon = null, speak = 0 }, };
     [SerializeField] TextMeshProUGUI CharNameDisp;
 
     [System.Serializable]
@@ -40,6 +41,8 @@ public class DialogueText : MonoBehaviour
             CharHeadNum = 0
         },
     };
+    
+    [SerializeField] GameObject[] EndPingItems;
 
     int line = -1;
     int maxline;
@@ -71,6 +74,12 @@ public class DialogueText : MonoBehaviour
                 else
                 {
                     DialogueBox.SetActive(false);
+                    if (EndPingItems != null)
+                        foreach (GameObject item in EndPingItems)
+                        {
+                            item.SetActive(true);
+                            Debug.Log("Item Available: " + item);
+                        }
                     this.gameObject.SetActive(false);
                 }
             }
@@ -100,6 +109,7 @@ public class DialogueText : MonoBehaviour
         foreach (var c in textEffects[line].fullDialogue)
         {
             _text.text += c;
+            AudioManager.Instance.PlayChar(charInfos[textEffects[line].CharHeadNum].speak);
             yield return new WaitForSeconds(1/textEffects[line].textSpeed);
         }
         _isTyping = false;
