@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class DialogueText : MonoBehaviour
 {
     public GameObject DialogueBox;
+    private PlayerMovement pm;
+    private Rigidbody2D rb;
+    [SerializeField] private bool NoPlayer = false;
     private TextMeshProUGUI _text;
     private Coroutine _typingCoroutine;
     private bool _isTyping = false;
@@ -50,6 +53,13 @@ public class DialogueText : MonoBehaviour
     private void Start()
     {
         DialogueBox.SetActive(true);
+        if (!NoPlayer)
+        {
+            pm = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+            pm.enabled = false;
+            rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
+            rb.linearVelocity = Vector2.zero;
+        }
         _text = GetComponent<TextMeshProUGUI>();
         _text.text = "";
         maxline = textEffects.Length;
@@ -80,6 +90,7 @@ public class DialogueText : MonoBehaviour
                             item.SetActive(true);
                             Debug.Log("Item Available: " + item);
                         }
+                    if (pm != null) pm.enabled = true;
                     this.gameObject.SetActive(false);
                 }
             }
@@ -129,6 +140,10 @@ public class DialogueText : MonoBehaviour
 
     private void TextShake()
     {
+        if (_text == null) return;
+        if (line < 0 || line >= textEffects.Length) return;
+        if (_text.textInfo.characterCount == 0) return;
+
         _text.ForceMeshUpdate();
         var cachedMeshInfo = _text.textInfo.CopyMeshInfoVertexData();
 

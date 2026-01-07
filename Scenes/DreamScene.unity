@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a20c534aae204547af5ec60d273c3d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaitSecondsPing
-  DelayTime: 3
+  DelayTime: 7
   PingObjects:
   - {fileID: 461171119}
 --- !u!4 &140976738
@@ -531,6 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
   DialogueBox: {fileID: 239573384}
+  NoPlayer: 1
   charInfos:
   - name: 
     icon: {fileID: 1025558367}
@@ -839,8 +840,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchRoom
   Range: {x: 10, y: 10}
-  SwitchRoomName: SampleRoom
+  SwitchRoomName: SampleRoom1
   ImmediateSwitch: 1
+  FadeSwitch: 1
 --- !u!4 &625341582
 Transform:
   m_ObjectHideFlags: 0
@@ -979,7 +981,7 @@ MonoBehaviour:
   - Type: 0
     Index: 0
     FadeIn: 1
-    FadeInSeconds: 2
+    FadeInSeconds: 7
   FadeOutBGM: 0
   FadeOutSeconds: 0
 --- !u!1 &1025558367
@@ -1238,7 +1240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioPlayer
   audioInfos: []
   FadeOutBGM: 1
-  FadeOutSeconds: 3
+  FadeOutSeconds: 7
 --- !u!4 &1467256624
 Transform:
   m_ObjectHideFlags: 0
