@@ -20,16 +20,17 @@ public class InteractBlocks : MonoBehaviour
     {
         Collider2D Hit = Physics2D.OverlapBox((Vector2)transform.position + Offset, Range, 0, PlayerLayer.value);
         if (Hit != null && Keyboard.current != null && Keyboard.current.enterKey.wasPressedThisFrame)
-        {
-            Debug.Log("Interacted Item: " + this.gameObject);
-            if (PingItems != null)
-                foreach (GameObject item in PingItems)
-                {
-                    item.SetActive(true);
-                    Debug.Log("Item Available: " + item);
-                }
-            this.gameObject.SetActive(false);
-        }
+            if (!DialogueManager.Instance.DialogueBoxActive() && !DialogueManager.Instance.InventoryUIActive())
+            {
+                Debug.Log("Interacted Item: " + gameObject);
+                if (PingItems != null)
+                    foreach (GameObject item in PingItems)
+                    {
+                        item.SetActive(true);
+                        Debug.Log("Item Available: " + item);
+                    }
+                gameObject.SetActive(false);
+            }
     }
 
     void OnDrawGizmosSelected()
