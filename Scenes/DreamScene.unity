@@ -151,6 +151,7 @@ MonoBehaviour:
   DelayTime: 7
   PingObjects:
   - {fileID: 461171119}
+  DisableObjects: []
 --- !u!4 &140976738
 Transform:
   m_ObjectHideFlags: 0
@@ -530,7 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3422c9ce2224c994fa87a8093d15cfd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  DialogueBox: {fileID: 239573384}
   NoPlayer: 1
   charInfos:
   - name: 
@@ -546,7 +546,7 @@ MonoBehaviour:
     frequency: 0
     amplitude: 0
     CharHeadNum: 0
-  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
+  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
     textSpeed: 20
     frequency: 0
     amplitude: 0
@@ -556,7 +556,7 @@ MonoBehaviour:
     frequency: 0
     amplitude: 0
     CharHeadNum: 0
-  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
+  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1"
     textSpeed: 20
     frequency: 0
     amplitude: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
     frequency: 0
     amplitude: 0
     CharHeadNum: 0
-  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
+  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
     textSpeed: 20
     frequency: 0
     amplitude: 0
@@ -576,7 +576,7 @@ MonoBehaviour:
     frequency: 0
     amplitude: 0
     CharHeadNum: 0
-  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
+  - fullDialogue: "\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1\u25A1"
     textSpeed: 20
     frequency: 0
     amplitude: 0
@@ -839,8 +839,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b9b4812ef495e4d8686d3f470c94a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchRoom
+  interactID: 
   Range: {x: 10, y: 10}
+  Offset: {x: 0, y: 0}
   SwitchRoomName: SampleRoom1
+  DoorSoundSwitch: 0
+  InteractSwitch: 1
+  DoorLocked: 0
   ImmediateSwitch: 1
   FadeSwitch: 1
 --- !u!4 &625341582
@@ -1071,8 +1076,9 @@ GameObject:
   - component: {fileID: 1269384775}
   - component: {fileID: 1269384774}
   - component: {fileID: 1269384773}
+  - component: {fileID: 1269384776}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Dialogue Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1162,6 +1168,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1269384776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269384771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3783db439bca59f44baa0ac68450b5b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
+  DialogueBox: {fileID: 239573384}
+  InventoryUI: {fileID: 0}
+  ItemDetailUI: {fileID: 0}
+  DoorLockedMessage: {fileID: 0}
+  PickupItemMessage: {fileID: 0}
+  InvFullMessage: {fileID: 0}
+  ItemCantUseMessage: {fileID: 0}
 --- !u!1 &1461239797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,6 +1219,7 @@ MonoBehaviour:
   DelayTime: 3
   PingObjects:
   - {fileID: 625341580}
+  DisableObjects: []
 --- !u!4 &1461239799
 Transform:
   m_ObjectHideFlags: 0
@@ -1240,7 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioPlayer
   audioInfos: []
   FadeOutBGM: 1
-  FadeOutSeconds: 7
+  FadeOutSeconds: 6
 --- !u!4 &1467256624
 Transform:
   m_ObjectHideFlags: 0
