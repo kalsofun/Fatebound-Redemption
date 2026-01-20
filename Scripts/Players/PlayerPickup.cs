@@ -3,29 +3,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerPickup : MonoBehaviour
 {
-    private LayerMask itemLayer;
-    private PlayerInventory inventory;
-    [SerializeField] private float interactRange = 1.2f;
+    LayerMask itemLayer;
+    PlayerInventory inventory;
+    [SerializeField] float interactRange = 1.2f;
 
     void Start()
     {
         itemLayer = LayerMask.GetMask("Item");
-        inventory = GetComponent<PlayerInventory>();
+        inventory = PlayerInventory.Instance;
     }
 
     void Update()
     {
-        if (Keyboard.current.enterKey.wasPressedThisFrame)
-        {
-            if (!DialogueManager.Instance.DialogueBoxActive() && !DialogueManager.Instance.InventoryUIActive())
+        if (Keyboard.current.fKey.wasPressedThisFrame)
+            if (!CanvasManager.Instance.AnyUIActive())
                 TryPickUp();
-        }
     }
 
     void TryPickUp()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange, itemLayer);
-
         if (hits.Length == 0) return;
 
         Collider2D closest = null;
@@ -56,9 +53,9 @@ public class PlayerPickup : MonoBehaviour
         if (inventory.AddItem(finalPickup.itemData))
         {
             Debug.Log("Picked up Item: " + closest);
-            DialogueManager.Instance.PickupItemMessage.GetComponent<DialogueText>().textEffects[0].fullDialogue = "獲得" + finalPickup.itemData.itemName + "。";
-            DialogueManager.Instance.PickupItemMessage.SetActive(true);
             AudioManager.Instance.PlaySFX(2);
+            CanvasManager.Instance.PickupItemMessage.GetComponent<DialogueText>().textEffects[0].fullDialogue = "獲得道具" + finalPickup.itemData.name + "。";
+            CanvasManager.Instance.PickupItemMessage.SetActive(true);
             Destroy(closest.gameObject);
         }
         else
@@ -66,7 +63,7 @@ public class PlayerPickup : MonoBehaviour
             Debug.Log("Inventory Full.");
             finalPickup.isPickedUp = false;
             if (col != null) col.enabled = true;
-            DialogueManager.Instance.InvFullMessage.SetActive(true);
+            CanvasManager.Instance.InvFullMessage.SetActive(true);
         }
     }
 

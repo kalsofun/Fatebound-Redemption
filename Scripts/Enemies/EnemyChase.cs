@@ -19,6 +19,8 @@ public class EnemyChase : MonoBehaviour
 
     private void Update()
     {
+        CanChase = !CanvasManager.Instance.AnyUIActive();
+
         if (!StartChasing || !CanChase)
         {
             rb.linearVelocity = Vector2.zero;

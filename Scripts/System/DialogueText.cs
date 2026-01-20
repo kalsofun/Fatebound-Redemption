@@ -51,7 +51,8 @@ public class DialogueText : MonoBehaviour
 
     private void OnEnable()
     {
-        DialogueManager.Instance.DialogueBox.SetActive(true);
+        if (CanvasManager.Instance.DialogueBox == null) return;
+        CanvasManager.Instance.DialogueBox.SetActive(true);
         if (!NoPlayer)
         {
             pm = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
@@ -82,7 +83,7 @@ public class DialogueText : MonoBehaviour
                 }
                 else
                 {
-                    DialogueManager.Instance.DialogueBox.SetActive(false);
+                    CanvasManager.Instance.DialogueBox.SetActive(false);
                     if (EndPingItems != null)
                         foreach (GameObject item in EndPingItems)
                         {

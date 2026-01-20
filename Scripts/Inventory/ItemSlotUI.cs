@@ -28,7 +28,7 @@ public class ItemSlotUI : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            DialogueManager.Instance.ItemDetailUI.Show(item, index);
+            CanvasManager.Instance.ItemDetailUI.Show(item, index);
         });
     }
 

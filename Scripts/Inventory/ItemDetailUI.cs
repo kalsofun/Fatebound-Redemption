@@ -4,13 +4,14 @@ using UnityEngine.UI;
 
 public class ItemDetailUI : MonoBehaviour
 {
-    private Image icon;
-    private TextMeshProUGUI nameText;
-    private TextMeshProUGUI descText;
-    private Button useButton;
+    Image icon;
+    TextMeshProUGUI nameText;
+    TextMeshProUGUI descText;
+    Button useButton;
+    
+    PlayerInventory inventory;
 
-    private int currentIndex;
-    private PlayerInventory inventory;
+    int currentIndex;
 
     void Awake()
     {
@@ -25,11 +26,11 @@ public class ItemDetailUI : MonoBehaviour
         gameObject.SetActive(true);
 
         icon.sprite = item.icon;
-        nameText.text = item.itemName;
+        nameText.text = item.name;
         descText.text = item.description;
 
         currentIndex = index;
-        inventory = FindFirstObjectByType<PlayerInventory>();
+        inventory = PlayerInventory.Instance;
 
         useButton.onClick.RemoveAllListeners();
         useButton.onClick.AddListener(() =>

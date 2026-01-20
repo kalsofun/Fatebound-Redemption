@@ -3,23 +3,33 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    Rigidbody2D rb;
+    Transform playerT;
 
     [SerializeField] private float speed = 5f;
     public bool canMove = true;
 
-    private void Start() => rb = GetComponent<Rigidbody2D>();
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        playerT = transform;
+        MenuManager.RegisterPlayer(transform);
+
+        SaveData data = SaveManager.Instance.Load();
+        if (data != null)
+            playerT.position = new Vector2(data.PlayerPosX, data.PlayerPosY);
+    }
 
     private void Update()
     {
-        if (canMove)
+        if (canMove && PauseManager.Instance.CanPauseScene())
         {
             Vector2 move = Vector2.zero;
 
             if (Keyboard.current != null)
             {
-                float x = (Keyboard.current.dKey.isPressed ? 1f : 0f) - (Keyboard.current.aKey.isPressed ? 1f : 0f);
-                float y = (Keyboard.current.wKey.isPressed ? 1f : 0f) - (Keyboard.current.sKey.isPressed ? 1f : 0f);
+                float x = Keyboard.current.dKey.ReadValue() - Keyboard.current.aKey.ReadValue();
+                float y = Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue();
                 move = new Vector2(x, y);
             }
 
